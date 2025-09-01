@@ -10,12 +10,17 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('transactions', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+        {
+            Schema::create('transactions', function (Blueprint $table) {
+                $table->id();
+                $table->foreignId('user_id')->constrained()->onDelete('cascade');
+                $table->foreignId('order_id')->nullable()->constrained()->onDelete('cascade');
+                $table->enum('type', ['topup','payment','refund']);
+                $table->integer('amount');
+                $table->timestamps();
+            });
+        }
+
 
     /**
      * Reverse the migrations.
