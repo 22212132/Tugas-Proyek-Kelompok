@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Product;
+use App\Models\Products;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        $products = Products::all();
         return view('products.index', compact('products'));
     }
 
@@ -33,23 +33,23 @@ class ProductController extends Controller
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
-        Product::create($data);
+        Products::create($data);
 
         return redirect()->route('products.index')
             ->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    public function show(Product $product)
+    public function show(Products $product)
     {
         return view('products.show', compact('product'));
     }
 
-    public function edit(Product $product)
+    public function edit(Products $product)
     {
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request, Products $product)
     {
         $request->validate([
             'name'  => 'required',
@@ -70,7 +70,7 @@ class ProductController extends Controller
             ->with('success', 'Produk berhasil diperbarui.');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Products $product)
     {
         $product->delete();
 
