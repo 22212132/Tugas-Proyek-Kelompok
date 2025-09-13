@@ -2,16 +2,23 @@ Laper.in
 Merupakan sebuah website yang memudahkan para pelajar dan guru di Sekolah Kristen Immanuel Pontianak untuk memesan makanan-makanan beserta minuman yang ada di kantin tanpa bersusah payah untuk mengantri depan kantin yang berkemungkinan untuk membuang waktu mereka dengan cara melakukan e-payment melalui website yang telah kami rancang ini. Setelah pembayaran dilakukan makanan atau minuman yang sudah dipesan akan diantar ke tujuannya seperti depan kelas masing-masing atau depan kantor guru.
  
 Instalasi: 
-PADA LARAGONa:
+PADA LARAGON:
+
 git clone https://github.com/(username anda)/Tugas-Proyek-Kelompok.git
+
 cd Tugas-Proyek-Kelompok
+
 composer install
+
 npm install
+
 npm run dev
 
 Duplikat file .env.example kemudian ubah namanya jadi .env
 kemudian ubah nama databasenya menjadi "tugas-proyek-kelompok", kembali ke LARAGON dan jalankan:
+
 php artisan key:generate
+
 php artisan serve
  
 Penggunaan teknologi untuk pembuatan website ini adalah Figma, Laragon, Laravel, Visual Studio Code, PHPMyAdmin dan GitHub.
