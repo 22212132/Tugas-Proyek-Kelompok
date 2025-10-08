@@ -9,8 +9,9 @@
             <span class="font-bold text-lg">Laper.in</span>
         </div>
         <div class="flex items-center space-x-2 w-1/2">
-            <input type="text" placeholder="Cari menu atau kantin..."
-                   class="w-full px-3 py-2 rounded-lg focus:outline-none text-gray-800">
+                <input type="text" name="search" placeholder="Cari produk ..."
+                        class="w-full px-3 py-2 rounded-lg focus:outline-none text-gray-800">
+
             <button class="bg-sky-700 hover:bg-sky-800 px-4 py-2 rounded-lg">Pesan</button>
         </div>
     </header>

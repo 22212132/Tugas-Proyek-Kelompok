@@ -7,10 +7,18 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Products::all();
-        return view('products.index', compact('products'));
+        $search = $request->input('search');
+
+    if ($search) {
+        $products = \App\Models\Products::where('name', 'like', "%{$search}%")
+            ->get();
+    } else {
+        $products = \App\Models\Products::get();
+    }
+
+    return view('products.index', compact('products', 'search'));
     }
 
     public function create()
