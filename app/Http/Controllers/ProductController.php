@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Products;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -12,10 +12,10 @@ class ProductController extends Controller
         $search = $request->input('search');
 
     if ($search) {
-        $products = \App\Models\Products::where('name', 'like', "%{$search}%")
+        $products = \App\Models\Product::where('name', 'like', "%{$search}%")
             ->get();
     } else {
-        $products = \App\Models\Products::get();
+        $products = \App\Models\Product::get();
     }
 
     return view('products.index', compact('products', 'search'));
@@ -41,23 +41,23 @@ class ProductController extends Controller
             $data['image'] = $request->file('image')->store('products', 'public');
         }
 
-        Products::create($data);
+        Product::create($data);
 
         return redirect()->route('products.index')
             ->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    public function show(Products $product)
+    public function show(Product $product)
     {
         return view('products.show', compact('product'));
     }
 
-    public function edit(Products $product)
+    public function edit(Product $product)
     {
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request, Products $product)
+    public function update(Request $request, Product $product)
     {
         $request->validate([
             'name'  => 'required',
@@ -78,7 +78,7 @@ class ProductController extends Controller
             ->with('success', 'Produk berhasil diperbarui.');
     }
 
-    public function destroy(Products $product)
+    public function destroy(Product $product)
     {
         $product->delete();
 

@@ -5,7 +5,7 @@ use App\Http\Controllers\ProductController;
 
 Route::resource('products', ProductController::class);
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/login', function () {
     return view('auth.login');
