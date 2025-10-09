@@ -34,19 +34,19 @@
     <section class="px-8 py-6">
         <h2 class="text-xl font-bold mb-4">Menu Kantin</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            @for($i = 0; $i < 8; $i++)
+            @foreach ($products as $product)
                 <div class="bg-white rounded-xl shadow-md overflow-hidden">
-                    <img src="/images/nasi-kuning.jpg" alt="Nasi Kuning" class="w-full h-40 object-cover">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-40 object-cover">
                     <div class="p-4">
                         <p class="text-sm text-gray-500">Kantin Mama</p>
-                        <h3 class="font-semibold">Nasi Kuning</h3>
-                        <p class="text-sky-600 font-bold">Rp15.000</p>
+                        <h3 class="font-semibold">{{ $product->name }}</h3>
+                        <p class="text-sky-600 font-bold">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
                         <button class="mt-3 w-full bg-sky-500 hover:bg-sky-600 text-white py-2 rounded-lg">
                             Pesan
                         </button>
                     </div>
                 </div>
-            @endfor
+            @endforeach
         </div>
     </section>
 </div>
