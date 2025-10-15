@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <!-- Hero Section -->
+
     <section class="section min-h-screen flex items-center py-16">
         <div class="container mx-8 px-4">
             <div class="flex flex-col md:flex-row items-center">
@@ -33,7 +33,8 @@
                         Sistem Pemesanan Makanan Kantin
                         Sekolah Kristen Immanuel
                     </p>
-                    <button class="bg-white rounded-full px-6 py-3 text-sm font-semibold text-indigo-600 shadow-xs">
+                    <button 
+                        class="bg-white rounded-full px-6 py-3 text-sm font-semibold text-indigo-600 shadow-xs">
                         Pesan Sekarang
                     </button>
                 </div>
@@ -41,7 +42,7 @@
                 <!-- Gambar di sebelah kanan -->
                 <div class="md:w-1/2">
                     <div class="rounded-xl overflow-hidden shadow-2xl">
-                        <img src="https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80" 
+                        <img src="img/students.jpg" 
                              alt="Makanan Kantin" class="w-full h-auto object-cover">
                     </div>
                 </div>
@@ -49,7 +50,6 @@
         </div>
     </section>
 
-    <!-- Content Section (Putih) -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Fitur Unggulan</h2>
@@ -91,7 +91,6 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
     <section class="py-16 bg-indigo-600">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold text-white mb-4">Sudah siap memesan?</h2>
@@ -102,7 +101,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-gray-800 text-white py-12">
         <div class="container mx-auto px-4">
             <div class="flex flex-col md:flex-row justify-between items-center">
