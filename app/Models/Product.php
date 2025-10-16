@@ -6,5 +6,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    protected $fillable = ['name', 'price', 'stock', 'image'];
+    protected $fillable = [
+    'name',
+    'price',
+    'stock',
+    'description',
+    'canteen_id',
+    'image',
+    ];
+
+    public function canteen()
+    {
+        return $this->belongsTo(Canteen::class, 'canteen_id');
+    }
 }

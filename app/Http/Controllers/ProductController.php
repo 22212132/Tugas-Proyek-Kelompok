@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Canteen;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
@@ -23,15 +23,18 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        $canteens = Canteen::all();
+        return view('products.create', compact('canteens'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
             'name'  => 'required',
+            'description' => 'required|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'canteen_id' => 'required|exists:canteens,id',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
@@ -54,15 +57,19 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $canteens = Canteen::all();
+        return view('products.edit', compact('product', 'canteens'));
     }
 
     public function update(Request $request, Product $product)
     {
+        dd($request->all());
         $request->validate([
             'name'  => 'required',
+            'description' => 'required|string',
             'price' => 'required|numeric',
             'stock' => 'required|integer',
+            'canteen_id' => 'required|exists:canteens,id',
             'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 

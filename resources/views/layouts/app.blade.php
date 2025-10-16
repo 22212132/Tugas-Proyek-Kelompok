@@ -1,3 +1,7 @@
+@php
+    $currentRoute = Route::currentRouteName();
+@endphp
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -38,7 +42,20 @@
             <span class="absolute inset-y-0 left-3 flex items-center text-blue-500">
                 <i class="fa fa-search"></i>
             </span>
-            <input type="text" placeholder="Mau makan apa hari ini?"
+            <form 
+            action="
+                @if(str_contains($currentRoute, 'products'))
+                    {{ route('products.index') }}
+                @elseif(str_contains($currentRoute, 'canteens'))
+                    {{ route('canteens.index') }}
+                @else
+                    {{ route('home') }}
+                @endif
+            " 
+            method="GET"
+            class="w-full max-w-md"
+            >   
+            <input type="text" name="search" placeholder="Mau makan apa hari ini?" value="{{ request('search') }}"
                    class="w-full pl-10 pr-4 py-2 rounded-full focus:outline-none text-gray-800 placeholder-gray-400 placeholder:italic">
         </div>
     </div>
