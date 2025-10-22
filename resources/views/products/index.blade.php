@@ -5,10 +5,7 @@
 @if(session('success'))
     <p style="color:green;">{{ session('success') }}</p>
 @endif
-<form action="{{ route('products.index') }}" method="GET">
-    <input type="text" name="search" placeholder="Cari produk..." value="{{ request('search') }}">
-    <button type="submit">Cari</button>
-</form>
+
 <table border="1" cellpadding="5" cellspacing="0">
     <tr>
         <th>Nama</th>

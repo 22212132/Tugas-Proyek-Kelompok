@@ -21,7 +21,7 @@
     <section class="px-8 py-6">
         <h2 class="text-xl font-bold mb-4">Menu Kantin</h2>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            @foreach ($products as $product)
+            @for($i = 0; $i < 8; $i++)
                 <div class="bg-white rounded-xl shadow-md overflow-hidden">
                     <div class="relative p-4">
                         <div class="rounded-lg overflow-hidden">
@@ -38,7 +38,7 @@
                     </button>
                 </div>
                 </div>
-            @endforeach
+            @endfor
         </div>
     </section>
 
