@@ -63,7 +63,6 @@ class ProductController extends Controller
 
     public function update(Request $request, Product $product)
     {
-        dd($request->all());
         $request->validate([
             'name'  => 'required',
             'description' => 'required|string',
