@@ -24,7 +24,7 @@
             </p>
         </div>
             <form method="POST" action="{{ route('login') }}" class="space-y-4">
-
+                @csrf
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out" >
                     <i class="fas fa-user text-gray-500 mr-2"></i>
                     <input type="text" name="email" placeholder="Email" required
