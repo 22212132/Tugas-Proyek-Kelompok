@@ -5,6 +5,9 @@
     <label>Nama:</label>
     <input type="text" name="name" value="{{ $product->name }}" required><br>
 
+    <label>Deskripsi:</label>
+    <textarea name="description">{{ $product->description }}</textarea><br>
+
     <label>Harga:</label>
     <input type="text" name="price" value="{{ $product->price }}" required><br>
 
