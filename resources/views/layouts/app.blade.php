@@ -59,12 +59,10 @@
                     const search = this.value.trim();
                     const currentPath = window.location.pathname;
 
-                    // Tentukan route aktif
                     let baseUrl = '/home';
                     if (currentPath.includes('products')) baseUrl = '/products';
                     else if (currentPath.includes('canteens')) baseUrl = '/canteens';
 
-                    // Redirect dengan query search
                     window.location.href = `${baseUrl}?search=${encodeURIComponent(search)}`;
                 }
             });
