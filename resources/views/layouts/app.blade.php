@@ -35,7 +35,7 @@
 
     <div class="flex-1 flex justify-center">
         <div class="relative w-4/5">
-            <span class="absolute inset-y-0 left-3 flex items-center text-blue-500">
+            <span class="absolute inset-y-0 left-3 flex items-center text-blue-500 ">
                 <i class="fa fa-search"></i>
             </span>
             <input type="text" placeholder="Mau makan apa hari ini?"
@@ -45,21 +45,21 @@
 
     <div class="flex items-center space-x-8">
 
-        <button class="relative">
+        <a href="{{ route('cart')}}" class="relative hover:text-indigo-200">
             <i class="fa-solid fa-cart-shopping text-xl"></i>
-        </button>
+        </a>
 
-        <button>
+        <a class="hover:text-indigo-200">
             <i class="fa-solid fa-heart text-xl"></i>
-        </button>
+        </a>
 
         <div class="h-6 w-px bg-white/50"></div>
 
-        <div>
+        <a href="{{ route('profile') }}" class="block transition-transform hover:scale-105 focus:outline-none">
             <img src="https://ui-avatars.com/api/?name=User+Default&background=random"
-                 alt="Akun"
-                 class="w-9 h-9 rounded-full border-2 border-white object-cover">
-        </div>
+                alt="Akun"
+                class="w-9 h-9 rounded-full border-2 border-white object-cover hover:border-blue-200 transition-colors cursor-pointer">
+        </a>
     </div>
 </header>
 

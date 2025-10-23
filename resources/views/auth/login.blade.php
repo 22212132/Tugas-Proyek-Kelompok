@@ -27,13 +27,13 @@
                 @csrf
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out" >
                     <i class="fas fa-user text-gray-500 mr-2"></i>
-                    <input type="text" name="email" placeholder="Email" required
+                    <input type="text" name="email" placeholder="Enter your email"
                         class="w-full focus:outline-none">
                 </div>
 
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out relative">
                     <i class="fas fa-lock text-gray-500 mr-2"></i>
-                    <input type="password" id="password" name="password" placeholder="Password" required class="w-full focus:outline-none pr-10">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" class="w-full focus:outline-none pr-10">
                     
                     <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer" id="togglePassword"></i>
                 </div>
@@ -45,10 +45,10 @@
                     <span class="ml-2 text-sm text-gray-600">Remember me</span>
                 </label>
 
-                <a href="{{ route('home') }}" 
+                <button href="{{ route('home') }}" 
                     class="bg-indigo-600 w-full rounded-lg px-4 py-3 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 text-center block">
                     Login
-                </a>
+                </button>
 
 
                 <div class="text-center mt-6">
