@@ -6,6 +6,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CanteenController;
 
 Route::resource('products', ProductController::class);
+Route::get('/products/{id}/item', [ProductController::class, 'showItem'])->name('products.item');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -23,3 +24,5 @@ Route::get('/profile', function () {
 
 
 Route::resource('canteens', CanteenController::class);
+
+Route::get('/canteen/{id}', [HomeController::class, 'showCanteen'])->name('canteen.show');

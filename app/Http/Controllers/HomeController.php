@@ -25,4 +25,14 @@ class HomeController extends Controller
 
     return view('home.index', compact('products', 'canteens'));
     }
+
+    public function showCanteen($id)
+    {
+        $canteen = Canteen::findOrFail($id);
+        $products = Product::where('canteen_id', $id)->get();
+        $canteens = Canteen::all();
+
+        return view('home.index', compact('products', 'canteens', 'canteen'));
+    }
+
 }
