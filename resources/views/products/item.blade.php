@@ -4,7 +4,7 @@
 <div>
     <div class="container mx-auto px-4 py-6 max-w-4xl">
         <!-- Tombol Back -->
-        <a href="{{ url('/home') }}" class="inline-flex items-center text-blue-600 mb-6 hover:text-indigo-800 transition-colors">
+        <a href="{{ route ('home')}}" class="inline-flex items-center text-blue-600 mb-6 hover:text-indigo-800 transition-colors">
             <i class="fas fa-arrow-left mr-2"></i>
             <span class="font-bold">Kembali</span>
         </a>

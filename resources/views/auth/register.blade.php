@@ -19,42 +19,67 @@
                 <h1 class="text-3xl font-bold m-1">Register</h1>
             </div>
 
-            <form method="POST" action="{{ route('register') }}" class="space-y-4">
+            @if($errors->any())
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                    <ul class="list-disc list-inside">
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            @if(session('success'))
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('register.post') }}" class="space-y-4">
                 @csrf
+                
+                <!-- Name -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out">
                     <i class="fas fa-user text-gray-500 mr-2"></i>
-                    <input type="text" name="name" placeholder="Nama Lengkap" required
-                        class="w-full focus:outline-none">
+                    <input type="text" name="name" placeholder="Enter your full name" required
+                        class="w-full focus:outline-none" value="{{ old('name') }}">
                 </div>
 
-
+                <!-- Email -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out">
                     <i class="fas fa-envelope text-gray-500 mr-2"></i>
-                    <input type="email" name="email" placeholder="Email" required
-                        class="w-full focus:outline-none">
+                    <input type="email" name="email" placeholder="Enter your email" required
+                        class="w-full focus:outline-none" value="{{ old('email') }}">
                 </div>
 
+                <!-- Class -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out">
                     <i class="fas fa-school text-gray-500 mr-2"></i>
-                    <select name="kelas" required class="w-full focus:outline-none bg-transparent">
+                    <select name="kelas" required class="w-full focus:outline-none bg-white border-none">
                         <option value="" disabled selected>Pilih Kelas</option>
-                        <option value="1">X TKJ 1</option>
-                        <option value="2">Kelas 2</option>
-                        <option value="3">Kelas 3</option>
+                        @if(isset($classes) && $classes->count() > 0)
+                            @foreach($classes as $class)
+                                <option value="{{ $class->id }}" {{ old('kelas') == $class->id ? 'selected' : '' }}>
+                                    {{ $class->name }}
+                                </option>
+                            @endforeach
+                        @else
+                            <option value="" disabled>Data kelas tidak tersedia</option>
+                        @endif
                     </select>
                 </div>
 
+                <!-- Password -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out relative">
                     <i class="fas fa-lock text-gray-500 mr-2"></i>
-                    <input type="password" id="password" name="password" placeholder="Password" required class="w-full focus:outline-none pr-10">
-
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required 
+                        class="w-full focus:outline-none pr-10">
                     <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer" id="togglePassword"></i>
                 </div>
 
                 <button type="submit" class="bg-indigo-600 w-full rounded-lg px-4 py-3 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2">
                     Register
                 </button>
-
 
                 <div class="text-center mt-6">
                     <p class="text-sm text-gray-600">
@@ -77,7 +102,5 @@
         this.classList.toggle("fa-eye-slash");
     });
 </script>
-
-
 </body>
 </html>
