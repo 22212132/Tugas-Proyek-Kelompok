@@ -1,24 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Canteen;
+
 use App\Models\Product;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->input('search');
-
-    if ($search) {
-        $products = \App\Models\Product::where('name', 'like', "%{$search}%")
-            ->get();
-    } else {
-        $products = \App\Models\Product::get();
-    }
-
-    return view('products.index', compact('products', 'search'));
+        $products = Product::all();
+        return view('products.index', compact('products'));
     }
 
     public function create()

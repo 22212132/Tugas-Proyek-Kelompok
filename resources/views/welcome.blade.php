@@ -33,10 +33,10 @@
                         Sistem Pemesanan Makanan Kantin
                         Sekolah Kristen Immanuel
                     </p>
-                    <button 
+                    <a href="{{ route('login')}}"
                         class="bg-white rounded-full px-6 py-3 text-sm font-semibold text-indigo-600 shadow-xs">
                         Pesan Sekarang
-                    </button>
+                    </a>
                 </div>
                 
                 <!-- Gambar di sebelah kanan -->
