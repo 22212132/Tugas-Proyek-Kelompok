@@ -1,3 +1,7 @@
+@php
+    $currentRoute = Route::currentRouteName();
+@endphp
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -55,12 +59,37 @@
 
     <!-- Search -->
     <div class="flex-1 flex justify-center">
-        <div class="relative w-4/5">
-            <span class="absolute inset-y-0 left-3 flex items-center text-blue-500">
-                <i class="fa fa-search"></i>
-            </span>
-            <input type="text" placeholder="Mau makan apa hari ini?"
-                   class="w-full pl-10 pr-4 py-2 rounded-full focus:outline-none text-gray-800 placeholder-gray-400 placeholder:italic">
+    <div class="relative w-4/5">
+        <span class="absolute inset-y-0 left-3 flex items-center text-blue-500">
+            <i class="fa fa-search"></i>
+        </span>
+
+        <input 
+            type="text" 
+            id="globalSearch" 
+            placeholder="Mau makan apa hari ini?" 
+            value="{{ request('search') }}" 
+            class="w-full pl-10 pr-4 py-2 rounded-full focus:outline-none text-gray-800 placeholder-gray-400 placeholder:italic"
+        >
+
+        <script>
+            document.getElementById('globalSearch').addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+
+                    const search = this.value.trim();
+                    const currentPath = window.location.pathname;
+
+                    // Tentukan route aktif
+                    let baseUrl = '/home';
+                    if (currentPath.includes('products')) baseUrl = '/products';
+                    else if (currentPath.includes('canteens')) baseUrl = '/canteens';
+
+                    // Redirect dengan query search
+                    window.location.href = `${baseUrl}?search=${encodeURIComponent(search)}`;
+                }
+            });
+        </script>
         </div>
     </div>
 

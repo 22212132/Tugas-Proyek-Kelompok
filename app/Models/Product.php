@@ -7,15 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
-    use HasFactory;
-
     protected $fillable = [
-        'name',
-        'description',
-        'price',
-        'stock',
-        'image',
+    'name',
+    'price',
+    'stock',
+    'description',
+    'canteen_id',
+    'image',
     ];
 
-
+    public function canteen()
+    {
+        return $this->belongsTo(Canteen::class, 'canteen_id');
+    }
 }

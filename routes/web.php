@@ -16,9 +16,7 @@ Route::get('/', function () {
 
 Route::resource('products', ProductController::class);
 
-Route::get('/home', function () {
-    return view('home.index');
-})->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //Auth
 Route::get('/login', [LoginController::class, 'index'])->name('login')->middleware('guest');
