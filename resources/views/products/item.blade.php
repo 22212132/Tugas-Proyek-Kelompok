@@ -112,9 +112,14 @@
             <button id="cancelCart" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:text-gray-800 font-medium">
                 Batal
             </button>
-            <button id="confirmAddToCart" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-indigo-600 font-medium transition-colors">
+            <form action="{{ route('cart.add') }}" method="POST">
+                @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="quantity" id="hiddenQuantity" value="1">
+            <button type="submit" id="confirmAddToCart" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-indigo-600 font-medium transition-colors">
                 Tambah ke Keranjang
             </button>
+            </form>
         </div>
     </div>
 </div>
@@ -123,6 +128,10 @@
 
 <script>
 
+    document.getElementById('confirmAddToCart').addEventListener('click', function () {
+    const selectedQty = document.getElementById('quantity').value;
+    document.getElementById('hiddenQuantity').value = selectedQty;
+    });
     // Elemen modal
     const cartModal = document.getElementById('cartModal');
     const modalBackdrop = document.getElementById('modalBackdrop');
