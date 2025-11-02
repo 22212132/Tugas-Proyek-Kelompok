@@ -93,7 +93,7 @@
 
     <!-- Right section -->
     <div class="flex items-center space-x-8">
-        <a href="{{ route('cart') }}" class="relative hover:text-indigo-200">
+        <a href="{{ route('order.cart') }}" class="relative hover:text-indigo-200">
             <i class="fa-solid fa-cart-shopping text-xl"></i>
         </a>
 
