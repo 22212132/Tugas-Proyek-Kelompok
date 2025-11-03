@@ -12,12 +12,11 @@
         <div class="bg-white rounded-xl shadow-md overflow-hidden">
             <div class="md:flex">
                 <div class="md:w-1/2">
-                    <img src="img/NasiKuning.jpeg"
-                         alt="Nasi Kuning" class="w-full h-64 md:h-full object-cover">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-64 md:h-full object-cover">
                 </div>
                 
                 <div class="md:w-1/2 p-6">
-                    <h1 class="text-2xl font-bold text-gray-800 mb-2">Nasi Kuning – Kantin Mama</h1>
+                    <h1 class="text-2xl font-bold text-gray-800 mb-2">{{ $product->name }} – {{ $product->canteen->name }}</h1>
 
                     <div class="flex items-center mb-4">
                         <div class="flex text-yellow-400 mr-2">
@@ -31,21 +30,21 @@
                     </div>
                     
                     <div class="mb-6">
-                        <span class="text-3xl font-bold text-blue-600">Rp15.000</span>
+                        <span class="text-3xl font-bold text-blue-600">{{ number_format($product->price, 0, ',', '.') }}</span>
                     </div>
                     
                     <div class="mb-6">
                         <h2 class="text-lg font-semibold text-gray-800 mb-2">Deskripsi</h2>
                         <p class="text-gray-600">
-                            Dibuat dari bahan-bahan pilihan, dimasak fresh setiap hari, serta dikemas higienis sehingga aman dan praktis untuk dinikmati.
+                            {{ Str::limit($product->description, 60, '...') }}
                         </p>
                     </div>
                     
                     
                     <div class="flex flex-col gap-3">
-                        <a href="" class="bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex-1 flex items-center justify-center">
+                        <button class="bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-indigo-700 transition-colors flex-1 flex items-center justify-center">
                             Pesan Sekarang
-                        </a>
+                        </button>
                         <button id="openCartModal" class="border border-blue-600 text-blue-600 py-3 px-6 rounded-lg font-semibold hover:bg-indigo-50 transition-colors flex-1">
                             <i class="fas fa-shopping-cart mr-2"></i>
                             Masukin ke Keranjang
@@ -78,10 +77,10 @@
         <div class="p-6">
             <!-- Informasi Produk -->
             <div class="flex items-center mb-6">
-                <img src="img/NasiKuning.jpeg" alt="Nasi Kuning" class="w-16 h-16 rounded-lg object-cover">
+                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-16 h-16 rounded-lg object-cover">
                 <div class="ml-4">
-                    <h4 class="font-semibold text-gray-800">Nasi Kuning</h4>
-                    <p class="text-blue-600 font-bold">Rp15.000</p>
+                    <h4 class="font-semibold text-gray-800">{{ $product->name }}</h4>
+                    <p class="text-blue-600 font-bold">{{ number_format($product->price, 0, ',', '.') }}</p>
                 </div>
             </div>
             
@@ -113,9 +112,14 @@
             <button id="cancelCart" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:text-gray-800 font-medium">
                 Batal
             </button>
-            <button id="confirmAddToCart" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-indigo-600 font-medium transition-colors">
+            <form action="{{ route('cart.add') }}" method="POST">
+                @csrf
+            <input type="hidden" name="product_id" value="{{ $product->id }}">
+            <input type="hidden" name="quantity" id="hiddenQuantity" value="1">
+            <button type="submit" id="confirmAddToCart" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-indigo-600 font-medium transition-colors">
                 Tambah ke Keranjang
             </button>
+            </form>
         </div>
     </div>
 </div>
@@ -124,6 +128,10 @@
 
 <script>
 
+    document.getElementById('confirmAddToCart').addEventListener('click', function () {
+    const selectedQty = document.getElementById('quantity').value;
+    document.getElementById('hiddenQuantity').value = selectedQty;
+    });
     // Elemen modal
     const cartModal = document.getElementById('cartModal');
     const modalBackdrop = document.getElementById('modalBackdrop');

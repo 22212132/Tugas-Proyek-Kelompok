@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Canteen;
 use App\Models\Product;
 use App\Models\Canteen; // ✅ tambahkan ini
 use Illuminate\Http\Request;
@@ -83,5 +83,12 @@ class ProductController extends Controller
 
         return redirect()->route('products.index')
             ->with('success', 'Produk berhasil dihapus.');
+    }
+
+    // ambek sesuai idnye
+    public function showItem($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('products.item', compact('product'));
     }
 }

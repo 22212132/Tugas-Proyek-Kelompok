@@ -3,7 +3,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
@@ -16,6 +15,7 @@ Route::get('/', function () {
 
 
 Route::resource('products', ProductController::class);
+Route::get('/products/{id}/item', [ProductController::class, 'showItem'])->name('products.item');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
@@ -48,8 +48,9 @@ Route::get('/favorite', function () {
 })->name('favorite');
 
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart');
-Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
-Route::post('/cart/delete-selected', [CartController::class, 'deleteSelected'])->name('cart.deleteSelected');
+Route::get('/canteen/{id}', [HomeController::class, 'showCanteen'])->name('canteen.show');
+Route::get('/cart', [CartController::class, 'cart'])->name('order.cart');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
 
+Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');

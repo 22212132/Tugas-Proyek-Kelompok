@@ -80,12 +80,10 @@
                     const search = this.value.trim();
                     const currentPath = window.location.pathname;
 
-                    // Tentukan route aktif
                     let baseUrl = '/home';
                     if (currentPath.includes('products')) baseUrl = '/products';
                     else if (currentPath.includes('canteens')) baseUrl = '/canteens';
 
-                    // Redirect dengan query search
                     window.location.href = `${baseUrl}?search=${encodeURIComponent(search)}`;
                 }
             });
@@ -95,7 +93,7 @@
 
 
     <div class="flex items-center space-x-8">
-        <a href="{{ route('cart') }}" class="relative hover:text-indigo-200">
+        <a href="{{ route('order.cart') }}" class="relative hover:text-indigo-200">
             <i class="fa-solid fa-cart-shopping text-xl"></i>
         </a>
 

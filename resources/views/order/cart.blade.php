@@ -1,3 +1,9 @@
+@if (session('success'))
+    <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
+        {{ session('success') }}
+    </div>
+@endif
+
 @extends('layouts.app')
 
 @section('title', 'Keranjang')
@@ -21,32 +27,33 @@
                 </thead>
 
                 <tbody>
-                    <!-- Sementara -->
+                    @foreach ($carts as $cart)
                     <tr class="border-b hover:bg-gray-50"
-                        data-id="1"
-                        data-name="Nasi Kuning"
-                        data-price="15000"
-                        data-quantity="1">
+                        data-id="{{ $cart->id }}"
+                        data-name="{{ $cart->product->name }}"
+                        data-price="{{ $cart->product->price }}"
+                        data-quantity="{{ $cart->quantity }}">
                         <td class="p-4 text-center">
                             <input type="checkbox" class="w-4 h-4 text-blue-800 rounded select-item" checked>
                         </td>
                         <td class="p-4 flex items-center space-x-4">
-                            <img src="img/NasiKuning.jpeg"
+                            <img src="{{ asset('img/'.$cart->product->image) }}"
                                  class="w-16 h-16 object-cover rounded-lg bg-gray-200">
                             <div>
-                                <span class="font-medium">Nasi Kuning</span>
-                                <p class="text-sm text-gray-500">Dibuat dari bahan-bahan pilihan, dimasak fresh setiap hari, serta dikemas higienis sehingga aman dan praktis untuk dinikmati.</p>
+                                <span class="font-medium">{{ $cart->product->name }}</span>
+                                <p class="text-sm text-gray-500">{{ Str::limit($cart->product->description, 60, '...') }}</p>
                             </div>
                         </td>
-                        <td class="p-4 font-semibold price-text">Rp15.000</td>
+                        <td class="p-4 font-semibold price-text">{{ number_format($cart->product->price, 0, ',', '.') }}</td>
                         <td class="p-4 text-center">
                             <div class="flex items-center justify-center space-x-2">
                                 <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 decrease">-</button>
-                                <span class="w-12 text-center font-medium quantity">1</span>
+                                <span class="w-12 text-center font-medium quantity">{{ $cart->quantity }}</span>
                                 <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 increase">+</button>
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -107,9 +114,14 @@
                 <span id="total">Rp0</span>
             </div>
 
-            <button class="bg-blue-500 text-white w-full py-3 rounded-lg font-semibold hover:bg-indigo-600 transition duration-200 mb-4">
-                Lanjutkan Pembayaran
-            </button>
+            <form action="{{ route('checkout') }}" method="POST">
+                @csrf
+                <input type="hidden" name="payment_method" value="cash">
+                <input type="hidden" name="delivery_place" value="Makan di tempat">
+                <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600">
+                    Lanjutkan Pembayaran
+                </button>
+            </form>
         </div>
     </div>
 </div>
