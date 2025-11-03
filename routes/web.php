@@ -6,6 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -30,15 +31,21 @@ Route::post('/logout', [LogoutController::class,'logout'])->name('logout')->midd
 
 
 
-Route::get('/profile', function () {
-    return view('profile.index');
-})->name('profile');
+Route::get('/profile', [ProfileController::class, 'index'])->name('profile');
+
+Route::get('/saldo', function () {
+    return view('profile.saldo');
+})->name('saldo');
+
 
 
 Route::get('/product', function () {
     return view('products.item');
 })->name('detail');
 
+Route::get('/favorite', function () {
+    return view('order.favorite');
+})->name('favorite');
 
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');

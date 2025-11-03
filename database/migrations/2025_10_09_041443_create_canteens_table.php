@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-<<<<<<<< HEAD:database/migrations/2025_10_09_041443_create_canteens_table.php
         Schema::create('canteens', function (Blueprint $table) {
             $table->id();
             $table->string('name');                    
             $table->text('description');      
             $table->string('image')->nullable();
             $table->timestamps();
-========
+        });
+
+       
         Schema::table('products', function (Blueprint $table) {
-            $table->dropColumn('description');
->>>>>>>> origin/main:database/migrations/2025_10_08_234001_remove_description_from_products_table.php
+            if (Schema::hasColumn('products', 'description')) {
+                $table->dropColumn('description');
+            }
         });
     }
 
@@ -30,12 +32,14 @@ return new class extends Migration
      */
     public function down(): void
     {
-<<<<<<<< HEAD:database/migrations/2025_10_09_041443_create_canteens_table.php
+        
         Schema::dropIfExists('canteens');
-========
+
+
         Schema::table('products', function (Blueprint $table) {
-            //
+            if (!Schema::hasColumn('products', 'description')) {
+                $table->text('description')->nullable();
+            }
         });
->>>>>>>> origin/main:database/migrations/2025_10_08_234001_remove_description_from_products_table.php
     }
 };
