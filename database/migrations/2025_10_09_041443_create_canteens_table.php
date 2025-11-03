@@ -18,6 +18,13 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->timestamps();
         });
+
+       
+        Schema::table('products', function (Blueprint $table) {
+            if (Schema::hasColumn('products', 'description')) {
+                $table->dropColumn('description');
+            }
+        });
     }
 
     /**
@@ -25,6 +32,14 @@ return new class extends Migration
      */
     public function down(): void
     {
+        
         Schema::dropIfExists('canteens');
+
+
+        Schema::table('products', function (Blueprint $table) {
+            if (!Schema::hasColumn('products', 'description')) {
+                $table->text('description')->nullable();
+            }
+        });
     }
 };

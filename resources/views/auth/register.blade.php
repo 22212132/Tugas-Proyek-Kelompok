@@ -38,17 +38,17 @@
             <form method="POST" action="{{ route('register.post') }}" class="space-y-4">
                 @csrf
                 
-                <!-- Name -->
+                <!-- Nama -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out">
                     <i class="fas fa-user text-gray-500 mr-2"></i>
-                    <input type="text" name="name" placeholder="Enter your full name" required
+                    <input type="text" name="name" placeholder="Masukkan Nama Lengkap" required
                         class="w-full focus:outline-none" value="{{ old('name') }}">
                 </div>
 
                 <!-- Email -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out">
                     <i class="fas fa-envelope text-gray-500 mr-2"></i>
-                    <input type="email" name="email" placeholder="Enter your email" required
+                    <input type="email" name="email" placeholder="Masukkan Email" required
                         class="w-full focus:outline-none" value="{{ old('email') }}">
                 </div>
 
@@ -72,7 +72,7 @@
                 <!-- Password -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out relative">
                     <i class="fas fa-lock text-gray-500 mr-2"></i>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" required 
+                    <input type="password" id="password" name="password" placeholder="Masukkan Password" required 
                         class="w-full focus:outline-none pr-10">
                     <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer" id="togglePassword"></i>
                 </div>
@@ -83,9 +83,9 @@
 
                 <div class="text-center mt-6">
                     <p class="text-sm text-gray-600">
-                        Already have an account? 
+                        Sudah memiliki akun? 
                         <a href="{{ route('login') }}" class="text-indigo-600 hover:underline font-semibold">
-                            Sign In
+                            Masuk sekarang
                         </a>
                     </p>
                 </div>

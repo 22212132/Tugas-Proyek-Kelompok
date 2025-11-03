@@ -52,10 +52,10 @@
 <header class="bg-blue-600 text-white px-16 py-3 flex items-center justify-between shadow-md">
 
     <!-- Logo -->
-    <div class="flex items-center space-x-3">
+    <a href="{{ route('home') }}" class="flex items-center space-x-3">
         <img src="{{ asset('logo/logo-mono.png') }}" alt="Logo" class="w-10 h-12">
         <span class="font-bold text-lg">Laper.in</span>
-    </div>
+    </a>
 
     <!-- Search -->
     <div class="flex-1 flex justify-center">
@@ -91,13 +91,13 @@
         </div>
     </div>
 
-    <!-- Right section -->
+
     <div class="flex items-center space-x-8">
         <a href="{{ route('order.cart') }}" class="relative hover:text-indigo-200">
             <i class="fa-solid fa-cart-shopping text-xl"></i>
         </a>
 
-        <a class="hover:text-indigo-200">
+        <a href="{{ route('favorite') }}" class="hover:text-indigo-200">
             <i class="fa-solid fa-heart text-xl"></i>
         </a>
 
@@ -117,10 +117,23 @@
 
             <div class="profile-popup text-gray-700">
                 @if($user)
-                    <div class="border-b pb-2 mb-2">
-                        <p class="font-semibold text-lg">{{ $user->name }}</p>
-                        <p class="text-sm text-gray-500">{{ $user->kelas->name ?? ' Tidak ada kelas' }}</p>
+            <div class="border-b pb-3 mb-3">
+                <p class="font-semibold text-lg">{{ $user->name }}</p>
+                <p class="text-sm text-gray-500">{{ $user->kelas->name ?? 'Tidak ada kelas' }}</p>
+
+    
+                @if(isset($user->saldo))
+                    <div class="mt-2 flex items-center justify-between bg-blue-50 text-blue-700 px-3 py-2 rounded-lg text-sm font-semibold">
+                        <span><i class="fa-solid fa-wallet mr-2"></i>Saldo</span>
+                        <span>Rp {{ number_format($user->saldo, 0, ',', '.') }}</span>
                     </div>
+                @else
+                    <div class="mt-2 bg-gray-100 text-gray-600 px-3 py-1.5 rounded-lg text-sm italic text-center">
+                        Saldo belum tersedia
+                    </div>
+                @endif
+</div>
+
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit"

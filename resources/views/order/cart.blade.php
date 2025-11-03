@@ -13,7 +13,7 @@
 
     <!-- Cart Table -->
     <div class="w-2/3">
-        <h4 class="text-3xl font-bold mb-6">Cart</h4>
+        <h4 class="text-3xl font-bold mb-6">Keranjang</h4>
 
         <div class="bg-white rounded-2xl shadow overflow-hidden">
             <table class="w-full">

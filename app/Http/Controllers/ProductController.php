@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 use App\Models\Canteen;
 use App\Models\Product;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Canteen; // ✅ tambahkan ini
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $products = Product::all();
+        $products = Product::with('canteen')->get(); // ✅ lebih efisien pakai relasi
         return view('products.index', compact('products'));
     }
 
@@ -23,15 +23,15 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => 'required',
+            'name'        => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'canteen_id' => 'required|exists:canteens,id',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'price'       => 'required|numeric|min:0',
+            'stock'       => 'required|integer|min:0',
+            'canteen_id'  => 'required|exists:canteens,id',
+            'image'       => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['name', 'description', 'price', 'stock', 'canteen_id']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');
@@ -57,15 +57,15 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'name'  => 'required',
+            'name'        => 'required|string|max:255',
             'description' => 'required|string',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'canteen_id' => 'required|exists:canteens,id',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'price'       => 'required|numeric|min:0',
+            'stock'       => 'required|integer|min:0',
+            'canteen_id'  => 'required|exists:canteens,id',
+            'image'       => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
-        $data = $request->all();
+        $data = $request->only(['name', 'description', 'price', 'stock', 'canteen_id']);
 
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('products', 'public');

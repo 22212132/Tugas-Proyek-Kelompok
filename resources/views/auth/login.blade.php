@@ -23,7 +23,6 @@
                 </p>
             </div>
 
-            {{-- ✅ Error Validation --}}
             @if($errors->any())
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                     <ul class="list-disc list-inside">
@@ -34,7 +33,6 @@
                 </div>
             @endif
 
-            {{-- ✅ Success Message (optional) --}}
             @if(session('success'))
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                     {{ session('success') }}
@@ -43,9 +41,11 @@
 
             <form method="POST" action="{{ route('login') }}" class="space-y-4">
                 @csrf
+
+                <!-- Email -->
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 focus-within:border-indigo-500 transition duration-300 ease-in-out" >
                     <i class="fas fa-user text-gray-500 mr-2"></i>
-                    <input type="text" name="email" placeholder="Enter your email"
+                    <input type="text" name="email" placeholder="Masukkan Email"
                         class="w-full focus:outline-none" value="{{ old('email') }}">
                 </div>
 
@@ -53,7 +53,7 @@
                 <div class="flex items-center border border-gray-400 rounded-lg px-4 py-3 
                     focus-within:border-indigo-500 transition duration-300 ease-in-out relative">
                     <i class="fas fa-lock text-gray-500 mr-2"></i>
-                    <input type="password" id="password" name="password" placeholder="Enter your password" 
+                    <input type="password" id="password" name="password" placeholder="Masukkan Password" 
                         class="w-full focus:outline-none pr-10">
                     <i class="fas fa-eye absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 cursor-pointer" id="togglePassword"></i>
                 </div>
@@ -65,9 +65,9 @@
 
                 <div class="text-center mt-6">
                     <p class="text-sm text-gray-600">
-                        Don't have an account? 
+                        Belum memiliki akun? 
                         <a href="{{ route('register') }}" class="text-indigo-600 hover:underline font-semibold">
-                            Sign Up
+                            Daftar sekarang
                         </a>
                     </p>
                 </div>
