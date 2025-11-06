@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 use App\Models\Canteen;
 use App\Models\Product;
-use App\Models\Canteen; // ✅ tambahkan ini
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('canteen')->get(); // ✅ lebih efisien pakai relasi
+        $products = Product::with('canteen')->get();
         return view('products.index', compact('products'));
     }
 

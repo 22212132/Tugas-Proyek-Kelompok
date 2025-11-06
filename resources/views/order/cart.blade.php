@@ -4,6 +4,12 @@
     </div>
 @endif
 
+@if (session('error'))
+    <div class="bg-red-100 text-red-700 p-3 rounded mb-3">
+        {{ session('error') }}
+    </div>
+@endif
+
 @extends('layouts.app')
 
 @section('title', 'Keranjang')
@@ -37,7 +43,7 @@
                             <input type="checkbox" class="w-4 h-4 text-blue-800 rounded select-item" checked>
                         </td>
                         <td class="p-4 flex items-center space-x-4">
-                            <img src="{{ asset('img/'.$cart->product->image) }}"
+                            <img src="{{ asset('storage/' . $cart->product->image) }}"
                                  class="w-16 h-16 object-cover rounded-lg bg-gray-200">
                             <div>
                                 <span class="font-medium">{{ $cart->product->name }}</span>
