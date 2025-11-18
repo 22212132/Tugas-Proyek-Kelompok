@@ -14,16 +14,9 @@ return new class extends Migration
         Schema::create('canteens', function (Blueprint $table) {
             $table->id();
             $table->string('name');                    
-            $table->text('description');      
+            $table->text('description')->nullable();     
             $table->string('image')->nullable();
             $table->timestamps();
-        });
-
-       
-        Schema::table('products', function (Blueprint $table) {
-            if (Schema::hasColumn('products', 'description')) {
-                $table->dropColumn('description');
-            }
         });
     }
 

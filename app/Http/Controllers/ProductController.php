@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 use App\Models\Canteen;
 use App\Models\Product;
-use App\Models\Canteen; // ✅ tambahkan ini
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('canteen')->get(); // ✅ lebih efisien pakai relasi
-        return view('products.index', compact('products'));
+        $products = Product::with('canteen')->get(); 
+        return view('admin.products.index', compact('products'));
     }
 
     public function create()
     {
         $canteens = Canteen::all();
-        return view('products.create', compact('canteens'));
+        return view('admin.products.create', compact('canteens'));
     }
 
     public function store(Request $request)
@@ -45,13 +44,13 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        return view('admin.products.index', compact('product'));
     }
 
     public function edit(Product $product)
     {
         $canteens = Canteen::all();
-        return view('products.edit', compact('product', 'canteens'));
+        return view('admin.products.edit', compact('product', 'canteens'));
     }
 
     public function update(Request $request, Product $product)
@@ -89,6 +88,6 @@ class ProductController extends Controller
     public function showItem($id)
     {
         $product = Product::findOrFail($id);
-        return view('products.item', compact('product'));
+        return view('product.item', compact('product'));
     }
 }

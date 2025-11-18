@@ -18,12 +18,12 @@ class CanteenController extends Controller
 
     $canteens = $query->get();
 
-    return view('canteens.index', compact('canteens'));
+    return view('admin.canteens.index', compact('canteens'));
     }
 
     public function create()
     {
-        return view('canteens.create');
+        return view('admin.canteens.create');
     }
 
     public function store(Request $request)
@@ -47,7 +47,7 @@ class CanteenController extends Controller
 
     public function edit(Canteen $canteen)
     {
-        return view('canteens.edit', compact('canteen'));
+        return view('admin.canteens.edit', compact('canteen'));
     }
 
     public function update(Request $request, Canteen $canteen)

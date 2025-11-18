@@ -80,7 +80,7 @@
                 <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-16 h-16 rounded-lg object-cover">
                 <div class="ml-4">
                     <h4 class="font-semibold text-gray-800">{{ $product->name }}</h4>
-                    <p class="text-blue-600 font-bold">{{ number_format($product->price, 0, ',', '.') }}</p>
+                    <p class="text-blue-600 font-bold">Rp{{ number_format($product->price, 0, ',', '.') }}</p>
                 </div>
             </div>
             
@@ -109,14 +109,14 @@
         
 
         <div class="flex justify-end space-x-3 p-6 border-t border-gray-200">
-            <button id="cancelCart" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:text-gray-800 font-medium">
+            <button id="cancelCart" class="px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-400 font-medium">
                 Batal
             </button>
             <form action="{{ route('cart.add') }}" method="POST">
                 @csrf
             <input type="hidden" name="product_id" value="{{ $product->id }}">
             <input type="hidden" name="quantity" id="hiddenQuantity" value="1">
-            <button type="submit" id="confirmAddToCart" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-indigo-600 font-medium transition-colors">
+            <button type="submit" id="confirmAddToCart" class="px-4 py-2 bg-blue-700 text-white rounded-lg hover:bg-indigo-600 font-medium transition-colors">
                 Tambah ke Keranjang
             </button>
             </form>
