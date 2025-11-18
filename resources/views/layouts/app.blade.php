@@ -49,7 +49,7 @@
     </style>
 </head>
 <body>
-<header class="bg-blue-600 text-white px-16 py-3 flex items-center justify-between shadow-md">
+<header class="bg-blue-700 text-white px-16 py-3 flex items-center justify-between shadow-md">
 
     <!-- Logo -->
     <a href="{{ route('home') }}" class="flex items-center space-x-3">

@@ -53,4 +53,15 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Kelas::class, 'class_id');
     }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(\App\Models\Transaction::class);
+    }
+
 }

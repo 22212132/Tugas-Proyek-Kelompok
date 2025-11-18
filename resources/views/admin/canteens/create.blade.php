@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container mx-auto p-6">
@@ -23,8 +23,8 @@
         </div>
 
         <div class="flex justify-end gap-2">
-            <a href="{{ route('canteens.index') }}" class="bg-gray-400 text-white px-4 py-2 rounded">Batal</a>
-            <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">Simpan</button>
+            <a href="{{ route('canteens.index') }}" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded">Batal</a>
+            <button type="submit" class="bg-blue-700 hover:bg-indigo-700 text-white px-4 py-2 rounded">Simpan</button>
         </div>
     </form>
 </div>
