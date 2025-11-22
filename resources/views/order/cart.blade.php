@@ -123,7 +123,7 @@
             <form action="{{ route('checkout') }}" method="POST">
                 @csrf
                 <input type="hidden" name="payment_method" value="cash">
-                <input type="hidden" name="delivery_place" value="Makan di tempat">
+                <input type="hidden" id="delivery_place" name="delivery_place" value="Makan di tempat">
                 <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600">
                     Lanjutkan Pembayaran
                 </button>
@@ -140,6 +140,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateRingkasan() {
         const rows = document.querySelectorAll('tbody tr');
+        const metodeDipilih = document.querySelector('input[name="metode"]:checked').value;
+        document.getElementById('delivery_place').value = metodeDipilih;
         const ringkasan = document.getElementById('ringkasan');
         const subtotalEl = document.getElementById('subtotal');
         const totalEl = document.getElementById('total');

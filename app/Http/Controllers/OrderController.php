@@ -22,10 +22,15 @@ class OrderController extends Controller
             return redirect()->back()->with('error', 'Keranjang masih kosong!');
         }
 
+        $delivery_method = $request->input('delivery_place', 'Makan di tempat');
+        $delivery_fee = ($delivery_method === 'delivery') ? 2000 : 0;
+
         $total_price = 0;
         foreach ($carts as $cart) {
             $total_price += $cart->product->price * $cart->quantity;
         }
+
+        $total_price += $delivery_fee;
 
         if ($user->saldo < $total_price) {
             return redirect()->back()->with('error', 'Saldo kamu tidak cukup untuk melakukan pembayaran!');
@@ -33,7 +38,7 @@ class OrderController extends Controller
 
         $order = Order::create([
             'user_id' => $user_id,
-            'status' => 'pending',
+            'status' => 'delivered',
             'payment_method' => $request->input('payment_method', 'cash'),
             'total_price' => $total_price,
             'delivery_place' => $request->input('delivery_place', 'Makan di tempat'),
@@ -45,7 +50,15 @@ class OrderController extends Controller
                 'product_id' => $cart->product_id,
                 'quantity' => $cart->quantity,
                 'price' => $cart->product->price,
+                'delivery_place' => $delivery_method,
             ]);
+
+            $cart->product->stock -= $cart->quantity;
+            if ($cart->product->stock < 0) {
+                $cart->product->stock = 0;
+            }
+
+            $cart->product->save();
         }
 
         $user->saldo -= $total_price;
@@ -62,4 +75,12 @@ class OrderController extends Controller
 
         return redirect()->route('order.cart')->with('success', 'Pesanan berhasil dibuat dan saldo telah dipotong!');
     }
+
+    public function orderIndex()
+    {
+        $orders = Order::with(['user', 'items.product'])->latest()->get();
+
+        return view('admin.orders.index', compact('orders'));
+    }
+
 }

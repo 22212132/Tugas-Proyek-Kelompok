@@ -29,13 +29,9 @@
         <tbody>
             @foreach ($canteens as $canteen)
             <tr>
+                <td class="px-4 py-2 text-sm text-gray-700">{{ $canteen->id }}</td>
                 <td class="px-4 py-2 text-sm text-gray-700">{{ $canteen->name }}</td>
                 <td class="px-4 py-2 text-sm text-gray-700">{{ $canteen->description }}</td>
-                <td class="px-4 py-2 text-sm text-gray-700">
-                    @if($canteen->image)
-                        <img src="{{ asset('storage/'.$canteen->image) }}" width="70">
-                    @endif
-                </td>
                 <td class="px-4 py-2 text-sm text-gray-700 text-center">
                     <div class="flex justify-center space-x-2">
                         <a href="{{ route('canteens.edit', $canteen->id) }}"
