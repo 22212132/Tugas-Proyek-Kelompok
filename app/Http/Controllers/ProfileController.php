@@ -21,13 +21,6 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile.saldo', compact('user'));
     }
-    
-    // Fungsi edit tidak diperlukan lagi karena menggunakan modal
-    // public function edit()
-    // {
-    //     $user = Auth::user();
-    //     return view('profile.edit', compact('user'));
-    // }
 
     public function update(Request $request)
     {
@@ -42,14 +35,11 @@ class ProfileController extends Controller
 
         $data = $request->except('profile_photo');
 
-        // Handle Profile Photo Upload
         if ($request->hasFile('profile_photo')) {
-            // Hapus foto lama jika ada
             if ($user->profile_photo_path) {
                 Storage::disk('public')->delete($user->profile_photo_path);
             }
 
-            // Simpan foto baru
             $path = $request->file('profile_photo')->store('profile-photos', 'public');
             $data['profile_photo_path'] = $path;
         }
@@ -71,14 +61,13 @@ class ProfileController extends Controller
 
         $user = Auth::user();
 
-        // Periksa apakah password lama benar
         if (!Hash::check($request->current_password, $user->password)) {
             throw ValidationException::withMessages([
                 'current_password' => ['Password lama salah.'],
             ]);
         }
 
-        // Update password
+
         $user->forceFill([
             'password' => Hash::make($request->password),
         ])->save();
@@ -91,13 +80,20 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         if ($user->profile_photo_path) {
-            // Hapus file dari storage
             Storage::disk('public')->delete($user->profile_photo_path);
-            // Hapus path dari database
             $user->profile_photo_path = null;
             $user->save();
         }
 
         return back()->with('success', 'Foto profil berhasil dihapus.');
     }
+    
+    public function account()
+    {
+        $user = auth()->user();
+        $orders = $user->orders()->with('items.product')->orderBy('created_at', 'desc')->get();
+
+        return view('account.index', compact('user', 'orders'));
+    }
+
 }

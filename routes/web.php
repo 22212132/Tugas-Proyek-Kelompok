@@ -2,7 +2,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LogoutController;
-
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\ProductController;
@@ -61,3 +61,7 @@ Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
 
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
+Route::get('/user', [UserController::class, 'index'])->name('user.index');
+Route::delete('/user/delete', [UserController::class, 'destroy'])->name('user.delete');
+Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
