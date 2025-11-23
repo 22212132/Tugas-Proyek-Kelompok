@@ -6,18 +6,24 @@
     <section class="px-8 py-6">
         <h2 class="text-xl font-bold">Laper? Pesan sini aja!</h2>
         <p class="text-gray-500">Kantin Sekolah Kristen Immanuel</p>
-        <a href="{{ url('/home') }}" class="text-blue-500 hover:underline">
-        Lihat semua kantin
-        </a>
-        <div class="flex space-x-4 mt-4">
-            @foreach ($canteens as $canteen)
-                <div class="w-68 bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
-                    <a href="{{ route('canteen.show', $canteen->id) }}">
-                    <img src="{{ asset('storage/' . $canteen->image) }}" alt="{{ $canteen->name }}" class="w-24 h-30">
-                    <p class="mt-2 text-sm font-semibold">{{ $canteen->name }}</p>
-                    </a>
-                </div>
-            @endforeach
+        <div class="flex space-x-2 mt-4">
+        @foreach ($canteens as $canteen)
+            <div class="w-68 bg-white rounded-xl shadow-md p-4 flex flex-col items-center">
+                <a href="{{ route('canteen.show', $canteen->id) }}" class="flex flex-col items-center">
+                    <div class="w-24 h-24 overflow-hidden flex items-center justify-center">
+                        <img src="{{ asset('storage/' . $canteen->image) }}"
+                            alt="{{ $canteen->name }}"
+                            class="object-cover">
+                    </div>
+                    <p class="mt-6 text-sm font-semibold text-center flex justify-center items-center w-full">
+                        {{ $canteen->name }}
+                    </p>
+
+                </a>
+            </div>
+        @endforeach
+
+
         </div>
     </section>
 

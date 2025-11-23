@@ -1,20 +1,21 @@
-@if (session('success'))
-    <div class="bg-green-100 text-green-700 p-3 rounded mb-4">
-        {{ session('success') }}
-    </div>
-@endif
-
-@if (session('error'))
-    <div class="bg-red-100 text-red-700 p-3 rounded mb-3">
-        {{ session('error') }}
-    </div>
-@endif
-
 @extends('layouts.app')
 
 @section('title', 'Keranjang')
 
 @section('content')
+
+@if (session('success'))
+    <div class="bg-green-100 text-green-700 border border-green-300 p-3 rounded mb-6">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if (session('error'))
+    <div class="bg-red-100 text-red-700 border border-red-300 p-3 rounded mb-6">
+        {{ session('error') }}
+    </div>
+@endif
+
 <div class="flex justify-between gap-6 m-5 mt-8">
 
     <!-- Cart Table -->
@@ -23,24 +24,34 @@
 
         <div class="bg-white rounded-2xl shadow overflow-hidden">
             <table class="w-full">
+                <div class="flex items-center space-x-2 p-4 bg-gray-50 border-b">
+                    <input type="checkbox" id="select-all" class="w-4 h-4 text-blue-800 rounded">
+                    <label for="select-all" class="text-sm font-medium">Pilih Semua</label>
+                </div>
                 <thead class="bg-gray-100">
-                    <tr class="text-left">
-                        <th class="p-4">Pilih</th>
-                        <th class="p-4">Produk</th>
-                        <th class="p-4">Harga</th>
-                        <th class="p-4 text-center">Jumlah</th>
+                    <tr class="text-center">
+                        <th class="px-4 py-2 text-sm font-semibold text-gray-700">Pilih</th>
+                        <th class="px-4 py-2 text-sm font-semibold text-gray-700">Produk</th>
+                        <th class="px-4 py-2 text-sm font-semibold text-gray-700">Harga</th>
+                        <th class="px-4 py-2 text-sm font-semibold text-gray-700 text-center">Jumlah</th>
+                        <th class="px-4 py-2 text-sm font-semibold text-gray-700">Aksi</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     @foreach ($carts as $cart)
-                    <tr class="border-b hover:bg-gray-50"
+                    <tr class="border-b hover:bg-gray-50 cart-item"
                         data-id="{{ $cart->id }}"
                         data-name="{{ $cart->product->name }}"
                         data-price="{{ $cart->product->price }}"
-                        data-quantity="{{ $cart->quantity }}">
+                        data-quantity="{{ $cart->quantity }}"
+                        data-total="{{ $cart->product->price * $cart->quantity }}">
                         <td class="p-4 text-center">
-                            <input type="checkbox" class="w-4 h-4 text-blue-800 rounded select-item" checked>
+                            <input type="checkbox" class="w-4 h-4 text-blue-800 rounded select-item" checked 
+                                   data-id="{{ $cart->id }}"
+                                   data-name="{{ $cart->product->name }}"
+                                   data-price="{{ $cart->product->price }}"
+                                   data-quantity="{{ $cart->quantity }}">
                         </td>
                         <td class="p-4 flex items-center space-x-4">
                             <img src="{{ asset('storage/' . $cart->product->image) }}"
@@ -50,13 +61,18 @@
                                 <p class="text-sm text-gray-500">{{ Str::limit($cart->product->description, 60, '...') }}</p>
                             </div>
                         </td>
-                        <td class="p-4 font-semibold price-text">{{ number_format($cart->product->price, 0, ',', '.') }}</td>
+                        <td class="p-4 font-semibold price-text">Rp {{ number_format($cart->product->price, 0, ',', '.') }}</td>
                         <td class="p-4 text-center">
                             <div class="flex items-center justify-center space-x-2">
-                                <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 decrease">-</button>
+                                <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 decrease" 
+                                        data-id="{{ $cart->id }}">-</button>
                                 <span class="w-12 text-center font-medium quantity">{{ $cart->quantity }}</span>
-                                <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 increase">+</button>
+                                <button class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center hover:bg-gray-300 increase"
+                                        data-id="{{ $cart->id }}">+</button>
                             </div>
+                        </td>
+                        <td class="p-4 text-center">
+                            <button class="text-red-600 font-medium delete-item" data-id="{{ $cart->id }}">Hapus</button>
                         </td>
                     </tr>
                     @endforeach
@@ -70,8 +86,17 @@
         <div class="bg-white rounded-2xl shadow p-6 sticky top-6">
             <h3 class="text-2xl font-bold mb-6">Ringkasan Pesanan</h3>
 
-            <div id="ringkasan" class="space-y-4 mb-6"></div>
-
+            <div id="ringkasan" class="space-y-4 mb-6">
+                @foreach ($carts as $cart)
+                <div class="flex justify-between items-center selected-item" data-id="{{ $cart->id }}">
+                    <div>
+                        <span class="font-medium">{{ $cart->product->name }}</span>
+                        <p class="text-sm text-gray-500">{{ $cart->quantity }} x Rp {{ number_format($cart->product->price, 0, ',', '.') }}</p>
+                    </div>
+                    <span class="font-semibold item-total">Rp {{ number_format($cart->product->price * $cart->quantity, 0, ',', '.') }}</span>
+                </div>
+                @endforeach
+            </div>
 
             <div class="space-y-2 mb-6 ">
                 <p class="font-semibold">Pilih Metode:</p>
@@ -85,10 +110,10 @@
                 </label>
             </div>
 
-           <!-- Jam -->
+            <!-- Jam -->
             <div class="mb-6 relative">
                 <label class="block font-semibold mb-2">Jam Pengantaran / Makan</label>
-                    <input 
+                <input 
                     type="text" 
                     id="jam" 
                     readonly 
@@ -96,16 +121,16 @@
                     class="border border-gray-300 rounded-lg w-full px-3 py-2 focus:outline-none focus:ring focus:ring-blue-300 cursor-pointer"
                 >
                 <div id="jam-popup" class="absolute z-10 mt-1 bg-white border border-gray-300 rounded-lg shadow-lg w-full max-h-60 overflow-y-auto hidden">
+                    <!-- Options akan diisi oleh JavaScript -->
                 </div>
-
-</div>
+            </div>
 
             <hr class="my-4">
 
             <div class="space-y-2 mb-4">
                 <div class="flex justify-between">
                     <span>Subtotal</span>
-                    <span id="subtotal" class="font-semibold">Rp0</span>
+                    <span id="subtotal" class="font-semibold">Rp {{ number_format($carts->sum(function($cart) { return $cart->product->price * $cart->quantity; }), 0, ',', '.') }}</span>
                 </div>
                 <div class="flex justify-between">
                     <span>Ongkir</span>
@@ -117,14 +142,15 @@
 
             <div class="flex justify-between text-lg font-bold mb-6">
                 <span>Total</span>
-                <span id="total">Rp0</span>
+                <span id="total">Rp {{ number_format($carts->sum(function($cart) { return $cart->product->price * $cart->quantity; }), 0, ',', '.') }}</span>
             </div>
 
-            <form action="{{ route('checkout') }}" method="POST">
+            <form action="{{ route('checkout') }}" method="POST" id="checkout-form">
                 @csrf
                 <input type="hidden" name="payment_method" value="cash">
                 <input type="hidden" id="delivery_place" name="delivery_place" value="Makan di tempat">
-                <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600">
+                <input type="hidden" id="selected_items" name="selected_items" value="">
+                <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 disabled:bg-gray-400 disabled:cursor-not-allowed" id="checkout-btn">
                     Lanjutkan Pembayaran
                 </button>
             </form>
@@ -134,127 +160,260 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    function formatRupiah(number) {
-        return 'Rp' + number.toLocaleString('id-ID');
+    // Inisialisasi variabel
+    let selectedItems = new Set(Array.from(document.querySelectorAll('.select-item:checked')).map(cb => cb.dataset.id));
+    const selectAllCheckbox = document.getElementById('select-all');
+    const checkoutBtn = document.getElementById('checkout-btn');
+    const selectedItemsInput = document.getElementById('selected_items');
+
+    // Update selected items input
+    function updateSelectedItems() {
+        selectedItemsInput.value = Array.from(selectedItems).join(',');
+        checkoutBtn.disabled = selectedItems.size === 0;
     }
 
+    // Fungsi untuk update ringkasan
     function updateRingkasan() {
-        const rows = document.querySelectorAll('tbody tr');
-        const metodeDipilih = document.querySelector('input[name="metode"]:checked').value;
-        document.getElementById('delivery_place').value = metodeDipilih;
-        const ringkasan = document.getElementById('ringkasan');
-        const subtotalEl = document.getElementById('subtotal');
-        const totalEl = document.getElementById('total');
-        const ongkirEl = document.getElementById('ongkir');
+        const ringkasanContainer = document.getElementById('ringkasan');
+        const subtotalElement = document.getElementById('subtotal');
+        const totalElement = document.getElementById('total');
+        
+        let subtotal = 0;
+        
+        // Kosongkan ringkasan
+        ringkasanContainer.innerHTML = '';
+        
+        // Update ringkasan berdasarkan item yang dipilih
+        document.querySelectorAll('.select-item:checked').forEach(checkbox => {
+            const itemId = checkbox.dataset.id;
+            const itemRow = checkbox.closest('.cart-item');
+            const quantity = parseInt(itemRow.querySelector('.quantity').textContent);
+            const price = parseInt(checkbox.dataset.price);
+            const itemTotal = price * quantity;
+            
+            subtotal += itemTotal;
+            
+            // Tambahkan item ke ringkasan
+            const itemElement = document.createElement('div');
+            itemElement.className = 'flex justify-between items-center selected-item';
+            itemElement.dataset.id = itemId;
+            itemElement.innerHTML = `
+                <div>
+                    <span class="font-medium">${checkbox.dataset.name}</span>
+                    <p class="text-sm text-gray-500">${quantity} x Rp ${price.toLocaleString('id-ID')}</p>
+                </div>
+                <span class="font-semibold item-total">Rp ${itemTotal.toLocaleString('id-ID')}</span>
+            `;
+            ringkasanContainer.appendChild(itemElement);
+        });
+        
+        // Update subtotal dan total
+        const ongkir = document.querySelector('input[name="metode"]:checked').value === 'delivery' ? 2000 : 0;
+        const total = subtotal + ongkir;
+        
+        subtotalElement.textContent = `Rp ${subtotal.toLocaleString('id-ID')}`;
+        document.getElementById('ongkir').textContent = `Rp ${ongkir.toLocaleString('id-ID')}`;
+        totalElement.textContent = `Rp ${total.toLocaleString('id-ID')}`;
+    }
 
-        const metode = document.querySelector('input[name="metode"]:checked').value;
-        let ongkir = metode === 'delivery' ? 2000 : 0;
-
-        let total = 0;
-        ringkasan.innerHTML = '';
-
-        rows.forEach(row => {
-            const checkbox = row.querySelector('.select-item');
-            if (checkbox.checked) {
-                const name = row.dataset.name;
-                const price = parseInt(row.dataset.price);
-                const quantity = parseInt(row.querySelector('.quantity').textContent);
-                const subtotal = price * quantity;
-
-                total += subtotal;
-
-                const div = document.createElement('div');
-                div.classList.add('flex', 'justify-between', 'items-center');
-                div.innerHTML = `
-                    <div>
-                        <span class="font-medium">${quantity}x ${name}</span>
-                    </div>
-                    <span class="font-semibold">${formatRupiah(subtotal)}</span>
-                `;
-                ringkasan.appendChild(div);
-
-                // update harga di kolom tabel
-                row.querySelector('.price-text').textContent = formatRupiah(subtotal);
+    // Select All functionality
+    selectAllCheckbox.addEventListener('change', function() {
+        const checkboxes = document.querySelectorAll('.select-item');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+            if (this.checked) {
+                selectedItems.add(checkbox.dataset.id);
+            } else {
+                selectedItems.delete(checkbox.dataset.id);
             }
         });
-
-        subtotalEl.textContent = formatRupiah(total);
-        ongkirEl.textContent = formatRupiah(ongkir);
-        totalEl.textContent = formatRupiah(total + ongkir);
-    }
-
-    // Event listeners
-    updateRingkasan();
-    document.querySelectorAll('.select-item').forEach(cb => cb.addEventListener('change', updateRingkasan));
-    document.querySelectorAll('.metode').forEach(r => r.addEventListener('change', updateRingkasan));
-
-    document.querySelectorAll('.increase').forEach(btn => btn.addEventListener('click', e => {
-        const tr = e.target.closest('tr');
-        const span = tr.querySelector('.quantity');
-        let qty = parseInt(span.textContent);
-        qty++;
-        span.textContent = qty;
-        tr.dataset.quantity = qty;
+        updateSelectedItems();
         updateRingkasan();
-    }));
+    });
 
-    document.querySelectorAll('.decrease').forEach(btn => btn.addEventListener('click', e => {
-        const tr = e.target.closest('tr');
-        const span = tr.querySelector('.quantity');
-        let qty = parseInt(span.textContent);
-        if (qty > 1) {
-            qty--;
-            span.textContent = qty;
-            tr.dataset.quantity = qty;
-            updateRingkasan();
-        }
-    }));
-});
-
-document.addEventListener('DOMContentLoaded', function() {
-
-    const jamInput = document.getElementById('jam');
-    const popup = document.getElementById('jam-popup');
-
-    
-    function generateJamOptions() {
-        const startHour = 7;
-        const endHour = 15;
-        const interval = 5; 
-
-        for (let hour = startHour; hour <= endHour; hour++) {
-            for (let minute = 0; minute < 60; minute += interval) {
-                const hh = hour.toString().padStart(2, '0');
-                const mm = minute.toString().padStart(2, '0');
-                const time = `${hh}:${mm}`;
-
-                const option = document.createElement('div');
-                option.textContent = time;
-                option.className = "px-4 py-2 hover:bg-blue-100 cursor-pointer";
-                option.addEventListener('click', () => {
-                    jamInput.value = time;
-                    popup.classList.add('hidden');
-                });
-                popup.appendChild(option);
+    // Individual item selection
+    document.querySelectorAll('.select-item').forEach(checkbox => {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                selectedItems.add(this.dataset.id);
+            } else {
+                selectedItems.delete(this.dataset.id);
+                selectAllCheckbox.checked = false;
             }
-        }
+            updateSelectedItems();
+            updateRingkasan();
+        });
+    });
+
+    // Delete item functionality
+    document.querySelectorAll('.delete-item').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.id;
+            if (confirm('Apakah Anda yakin ingin menghapus item ini?')) {
+                // Kirim request DELETE ke server
+                fetch(`/cart/${itemId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Hapus item dari DOM
+                        const itemRow = document.querySelector(`.cart-item[data-id="${itemId}"]`);
+                        if (itemRow) {
+                            itemRow.remove();
+                        }
+                        
+                        // Hapus dari selected items
+                        selectedItems.delete(itemId);
+                        updateSelectedItems();
+                        updateRingkasan();
+                        
+                        // Update select all checkbox
+                        const remainingCheckboxes = document.querySelectorAll('.select-item');
+                        selectAllCheckbox.checked = remainingCheckboxes.length > 0 && 
+                            remainingCheckboxes.length === document.querySelectorAll('.select-item:checked').length;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Terjadi kesalahan saat menghapus item');
+                });
+            }
+        });
+    });
+
+    // Increase quantity
+    document.querySelectorAll('.increase').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.id;
+            const quantityElement = this.parentElement.querySelector('.quantity');
+            let quantity = parseInt(quantityElement.textContent);
+            
+            quantity++;
+            quantityElement.textContent = quantity;
+            
+            // Update di checkbox data attribute
+            const checkbox = document.querySelector(`.select-item[data-id="${itemId}"]`);
+            if (checkbox) {
+                checkbox.dataset.quantity = quantity;
+            }
+            
+            // Update total di row
+            const price = parseInt(checkbox.dataset.price);
+            const itemRow = this.closest('.cart-item');
+            itemRow.dataset.quantity = quantity;
+            itemRow.dataset.total = price * quantity;
+            
+            // Update quantity di server (optional)
+            updateQuantityOnServer(itemId, quantity);
+            
+            updateRingkasan();
+        });
+    });
+
+    // Decrease quantity
+    document.querySelectorAll('.decrease').forEach(button => {
+        button.addEventListener('click', function() {
+            const itemId = this.dataset.id;
+            const quantityElement = this.parentElement.querySelector('.quantity');
+            let quantity = parseInt(quantityElement.textContent);
+            
+            if (quantity > 1) {
+                quantity--;
+                quantityElement.textContent = quantity;
+                
+                // Update di checkbox data attribute
+                const checkbox = document.querySelector(`.select-item[data-id="${itemId}"]`);
+                if (checkbox) {
+                    checkbox.dataset.quantity = quantity;
+                }
+                
+                // Update total di row
+                const price = parseInt(checkbox.dataset.price);
+                const itemRow = this.closest('.cart-item');
+                itemRow.dataset.quantity = quantity;
+                itemRow.dataset.total = price * quantity;
+                
+                // Update quantity di server (optional)
+                updateQuantityOnServer(itemId, quantity);
+                
+                updateRingkasan();
+            }
+        });
+    });
+
+    // Update metode pengiriman
+    document.querySelectorAll('.metode').forEach(radio => {
+        radio.addEventListener('change', function() {
+            const deliveryPlace = document.getElementById('delivery_place');
+            if (this.value === 'delivery') {
+                deliveryPlace.value = 'Delivery';
+            } else {
+                deliveryPlace.value = 'Makan di tempat';
+            }
+            updateRingkasan();
+        });
+    });
+
+    // Fungsi untuk update quantity di server
+    function updateQuantityOnServer(itemId, quantity) {
+        fetch(`/cart/${itemId}`, {
+            method: 'PUT',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ quantity: quantity })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (!data.success) {
+                console.error('Failed to update quantity');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
     }
 
-    generateJamOptions();
-
-    // Tampilkan popup saat input diklik
-    jamInput.addEventListener('click', () => {
-        popup.classList.toggle('hidden');
+    // Jam functionality (placeholder)
+    const jamInput = document.getElementById('jam');
+    const jamPopup = document.getElementById('jam-popup');
+    
+    jamInput.addEventListener('click', function() {
+        // Contoh jam yang tersedia
+        const jamTersedia = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00'];
+        
+        jamPopup.innerHTML = '';
+        jamTersedia.forEach(jam => {
+            const div = document.createElement('div');
+            div.className = 'px-4 py-2 hover:bg-gray-100 cursor-pointer';
+            div.textContent = jam;
+            div.addEventListener('click', function() {
+                jamInput.value = jam;
+                jamPopup.classList.add('hidden');
+            });
+            jamPopup.appendChild(div);
+        });
+        
+        jamPopup.classList.toggle('hidden');
     });
 
-    // Tutup popup jika klik di luar area
-    document.addEventListener('click', (e) => {
-        if (!popup.contains(e.target) && e.target !== jamInput) {
-            popup.classList.add('hidden');
+    // Close jam popup when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!jamInput.contains(e.target) && !jamPopup.contains(e.target)) {
+            jamPopup.classList.add('hidden');
         }
     });
-});
 
+    // Initialize
+    updateSelectedItems();
+    updateRingkasan();
+});
 </script>
 
 @endsection

@@ -9,7 +9,8 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\CanteenController;
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\OrderController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -35,8 +36,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile/history', [HistoryController::class, 'history'])->name('history');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('edit');
 
-
-
+    Route::post('/order/direct', [OrderController::class, 'directOrder'])->name('order.direct');
+    Route::get('/orders', [OrderController::class, 'orderIndex'])->name('orders.index');
 });
 
 
@@ -49,19 +50,19 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/favorite', function () {
     return view('order.favorite');
 })->name('favorite');
-Route::get('/admin/dashboard', [AdminController::class, 'index']);
-
 
 Route::resource('canteens', CanteenController::class);
 Route::get('/canteen/{id}', [HomeController::class, 'showCanteen'])->name('canteen.show');
 
 
 Route::get('/cart', [CartController::class, 'cart'])->name('order.cart');
+Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
 Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
 
 
 Route::post('/checkout', [OrderController::class, 'checkout'])->name('checkout');
-Route::get('/user', [UserController::class, 'index'])->name('user.index');
-Route::delete('/user/delete', [UserController::class, 'destroy'])->name('user.delete');
-Route::get('/user/edit', [UserController::class, 'edit'])->name('user.edit');
-Route::put('/user/update', [UserController::class, 'update'])->name('user.update');
+Route::get('/users', [UserController::class, 'index'])->name('user.index');
+Route::delete('/users/delete', [UserController::class, 'destroy'])->name('user.delete');
+Route::get('/users/edit', [UserController::class, 'edit'])->name('user.edit');
+Route::put('/users/update', [UserController::class, 'update'])->name('user.update');

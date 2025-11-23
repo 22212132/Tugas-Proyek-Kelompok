@@ -11,14 +11,15 @@
 
 
         <div class="flex items-center justify-between mb-6">
-            <h1 class="text-xl font-bold text-gray-800">Daftar Produk</h1>
+            <h1 class="text-3xl font-bold text-gray-800">Daftar Produk</h1>
             <a href="{{ route('products.create') }}"
                class="bg-blue-700 hover:bg-indigo-700 text-white text-sm px-3 py-1.5 rounded shadow">
                 Tambah Produk
             </a>
         </div>
 
-        <table class="min-w-full">
+        <div class="bg-white shadow rounded-lg overflow-hidden w-full">
+            <table class="min-w-full text-center border-collapse">
                 <thead>
                     <tr class="bg-gray-200">
                         <th class="px-4 py-2 text-sm font-semibold text-gray-700">ID</th>
@@ -67,7 +68,8 @@
                             </tr>
                     @endforeach
                 </tbody>
-        </table>
+            </table>
+        </div>
         
     </div>
 </div>
