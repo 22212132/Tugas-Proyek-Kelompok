@@ -26,6 +26,7 @@
                         <th class="px-4 py-2 text-sm font-semibold text-gray-700">Stok</th>
                         <th class="px-4 py-2 text-sm font-semibold text-gray-700">Harga</th>
                         <th class="px-4 py-2 text-sm font-semibold text-gray-700">Kantin</th>
+                        <th class="px-4 py-2 text-sm font-semibold text-gray-700">Gambar</th>
                         <th class="px-4 py-2 text-sm font-semibold text-gray-700 text-center">Aksi</th>
                     </tr>
                 </thead>
@@ -40,6 +41,11 @@
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-700">
                                     {{ $product->canteen->name ?? '-' }}
+                                </td>
+                                 <td class="px-4 py-2 text-sm text-gray-700">{{ $product->img }}
+                                    @if($product->image)
+                                        <img src="{{ asset('storage/'.$product->image) }}" width="70">
+                                    @endif
                                 </td>
                                 <td class="px-4 py-2 text-sm text-gray-700 text-center">
                                     <div class="flex justify-center space-x-2">

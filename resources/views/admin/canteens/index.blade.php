@@ -23,15 +23,17 @@
                     <th class="px-4 py-2 text-sm font-semibold text-gray-700">ID</th>
                     <th class="px-4 py-2 text-sm font-semibold text-gray-700">Nama</th>
                     <th class="px-4 py-2 text-sm font-semibold text-gray-700">Deskripsi</th>
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-700">Gambar</th>
                     <th class="px-4 py-2 text-sm font-semibold text-gray-700 text-center">Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($canteens as $canteen)
             <tr>
+                <td class="px-4 py-2 text-sm text-gray-700">{{ $canteen->id }}</td>
                 <td class="px-4 py-2 text-sm text-gray-700">{{ $canteen->name }}</td>
                 <td class="px-4 py-2 text-sm text-gray-700">{{ $canteen->description }}</td>
-                <td class="px-4 py-2 text-sm text-gray-700">
+                <td class="px-4 py-2 text-sm text-gray-700">{{ $canteen->img }}
                     @if($canteen->image)
                         <img src="{{ asset('storage/'.$canteen->image) }}" width="70">
                     @endif
