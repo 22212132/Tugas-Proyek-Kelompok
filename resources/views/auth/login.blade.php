@@ -9,6 +9,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Login - Laper.in</title>
 </head>
+
 <body>
     
 <div class="min-h-screen flex items-center justify-center bg-blue-600">

@@ -24,16 +24,11 @@
             <span class="font-bold text-lg">Laper.in</span>
         </a>
 
-        <a href="#" 
-           class="flex items-center w-full space-x-2  'bg-white/10' : 'hover:bg-white/10' }} rounded-md px-3 py-2 transition">
-            <i class="fa-solid fa-chart-simple text-white"></i>
-            <span>Dashoard</span>
-        </a>
 
         <a  href="{{ route('canteens.index') }}"
            class="flex items-center w-full space-x-2 'bg-white/10' : 'hover:bg-white/10' }} rounded-md px-3 py-2 transition">
             <i class="fa fa-store text-white"></i>
-            <span>Canteen</span>
+            <span>Canteens</span>
         </a>
 
         <a href="{{ route('products.index') }}"
@@ -51,7 +46,7 @@
         <a  href="{{ route('user.index') }}"
            class="flex items-center w-full space-x-2 'bg-white/10' : 'hover:bg-white/10' }} rounded-md px-3 py-2 transition">
             <i class="fa fa-user text-white"></i>
-            <span>Account</span>
+            <span>Users</span>
         </a>
     </div>
 

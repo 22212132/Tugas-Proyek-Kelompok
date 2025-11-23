@@ -1,29 +1,31 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="p-6">
+<div class="min-h-screen w-full">
 
-    <h1 class="text-2xl font-bold mb-4">Daftar Order</h1>
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-3xl font-bold text-gray-800">Daftar Pesanan</h1>
+    </div>
 
-    <div class="bg-white shadow rounded-lg overflow-hidden">
-        <table class="w-full border-collapse">
-            <thead class="bg-gray-100">
-                <tr>
-                    <th class="p-3 text-left">ID</th>
-                    <th class="p-3 text-left">User</th>
-                    <th class="p-3 text-left">Total Harga</th>
-                    <th class="p-3 text-left">Status</th>
-                    <th class="p-3 text-left">Detail</th>
+    <div class="bg-white shadow rounded-lg overflow-hidden w-full">
+        <table class="min-w-full text-center border-collapse">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-700">ID</th>
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-700">User</th>
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-700">Total Harga</th>
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-700">Status</th>
+                    <th class="px-4 py-2 text-sm font-semibold text-gray-700">Detail</th>
                 </tr>
             </thead>
 
             <tbody>
                 @foreach ($orders as $order)
                 <tr class="border-b hover:bg-gray-50">
-                    <td class="p-3">#{{ $order->id }}</td>
-                    <td class="p-3">{{ $order->user->name }}</td>
-                    <td class="p-3">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
-                    <td class="p-3">
+                    <td class="px-4 py-2 text-sm text-gray-700">{{ $order->id }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-700">{{ $order->user->name }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-700">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
+                    <td class="px-4 py-2 text-sm text-gray-700">
                         <span class="px-2 py-1 rounded text-sm bg-blue-100 text-blue-800">
                             {{ $order->status }}
                         </span>
@@ -37,7 +39,6 @@
                     </td>
                 </tr>
 
-                <!-- Detail Order -->
                 <tr class="hidden bg-gray-50" id="detail-{{ $order->id }}">
                     <td colspan="6" class="p-4">
                         <p class="font-semibold mb-2">Produk:</p>

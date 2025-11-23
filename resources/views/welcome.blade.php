@@ -95,9 +95,9 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold text-white mb-4">Sudah siap memesan?</h2>
             <p class="text-indigo-100 mb-8 max-w-2xl mx-auto">Daftar sekarang dan nikmati kemudahan memesan makanan kantin tanpa antri.</p>
-            <button class="bg-white text-indigo-600 rounded-full px-8 py-4 text-lg font-semibold shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 transition duration-200">
+            <a href="{{ route('register')}}" class="bg-white text-indigo-600 rounded-full px-8 py-4 text-lg font-semibold shadow-xs hover:bg-gray-100 focus-visible:outline-2 focus-visible:outline-offset-2 transition duration-200">
                 Daftar Sekarang
-            </button>
+            </a>
         </div>
     </section>
 
